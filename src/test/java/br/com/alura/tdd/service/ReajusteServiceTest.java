@@ -2,19 +2,42 @@ package br.com.alura.tdd.service;
 
 import br.com.alura.tdd.modelo.Desempenho;
 import br.com.alura.tdd.modelo.Funcionario;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReajusteServiceTest {
 
+    private ReajusteService service;
+    private Funcionario funcionario;
+
+    @BeforeAll
+    public static void antesDeTodos(){
+        System.out.println("Antes de todos!");
+    }
+
+    @BeforeEach
+    public void inicializar(){
+        System.out.println("Inicializando teste...");
+        this.service = new ReajusteService();
+    }
+
+    @AfterAll
+    public static void depoisDeTodos(){
+        System.out.println("Depois de todos");
+    }
+
+    @AfterEach
+    public void finalizar(){
+        System.out.println("Finalizando teste...");
+    }
+
     @Test
     void reajusteDeveriaSerDeTresPorcentoQuandoDesempenhoForADesejar(){
-        var service = new ReajusteService();
-        var funcionario = new Funcionario("Ana", LocalDate.now(),
+        funcionario = new Funcionario("Ana", LocalDate.now(),
                 new BigDecimal("1000.00"));
 
         service.concederReajuste(funcionario, Desempenho.A_DESEJAR);
@@ -24,8 +47,7 @@ public class ReajusteServiceTest {
 
     @Test
     void reajusteDeveriaSerDeQuinzePorcentoQuandoDesempenhoForBom(){
-        var service = new ReajusteService();
-        var funcionario = new Funcionario("João", LocalDate.now(),
+        funcionario = new Funcionario("João", LocalDate.now(),
                 new BigDecimal("1000.00"));
 
         service.concederReajuste(funcionario, Desempenho.BOM);
@@ -35,8 +57,7 @@ public class ReajusteServiceTest {
 
     @Test
     void reajusteDeveriaSerDeVintePorcentoQuandoDesempenhoForOtimo(){
-        var service = new ReajusteService();
-        var funcionario = new Funcionario("Pedro", LocalDate.now(),
+        funcionario = new Funcionario("Pedro", LocalDate.now(),
                 new BigDecimal("1000.00"));
 
         service.concederReajuste(funcionario, Desempenho.OTIMO);
